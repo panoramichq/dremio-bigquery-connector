@@ -124,8 +124,8 @@
               <shadedPattern>bqdeps.grpc</shadedPattern>
             </relocation>
             <relocation>
-              <pattern>javax</pattern>
-              <shadedPattern>bqdeps.javax</shadedPattern>
+              <pattern>javax.annotation</pattern>
+              <shadedPattern>bqdeps.javax.annotation</shadedPattern>
             </relocation>
             <relocation>
               <pattern>io</pattern>
@@ -155,6 +155,13 @@
                 <exclude>META-INF/native/libio_grpc_netty_shaded_netty_tcnative_linux_x86_64.so</exclude>
                 <exclude>META-INF/native/io_grpc_netty_shaded_netty_tcnative_windows_x86_64.dll</exclude>
                 <exclude>META-INF/native/libio_grpc_netty_shaded_netty_tcnative_osx_x86_64.jnilib</exclude>
+              </excludes>
+            </filter>
+            <!-- Filter google jks -->
+            <filter>
+              <artifact>com.google.api-client:google-api-client</artifact>
+              <excludes>
+                <exclude>com/google/api/client/googleapis/google.jks</exclude>
               </excludes>
             </filter>
             <filter>
@@ -190,7 +197,7 @@
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
-              <includes>**/META-INF/native/*</includes>
+              <includes>**/META-INF/native/*,com/google/api/client/googleapis/google.jks</includes>
               <outputDirectory>${project.build.directory}/classes/</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -222,6 +229,10 @@
                 <fileSet>
                   <sourceFile>${project.build.directory}/classes/META-INF/native/libio_grpc_netty_shaded_netty_tcnative_osx_x86_64.jnilib</sourceFile>
                   <destinationFile>${project.build.directory}/classes/META-INF/native/libbqdeps_io_grpc_netty_shaded_netty_tcnative_osx_x86_64.jnilib</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.build.directory}/classes/com/google/api/client/googleapis/google.jks</sourceFile>
+                  <destinationFile>${project.build.directory}/classes/bqdeps/com/google/api/client/googleapis/bqdeps.google.jks</destinationFile>
                 </fileSet>
               </fileSets>
             </configuration>
