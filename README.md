@@ -67,7 +67,7 @@ Building and Installation
 
 2. Generate a shaded BigQuery JDBC client JAR file by running `mvn clean install` inside the `bigquery-driver-shade` directory.
 3. In root directory with the pom.xml file run `mvn clean install -DskipTests`.
-4. Take the resulting .jar file in the target folder and put it in the <DREMIO_HOME>\jars folder in Dremio. Put the shaded .jar file from step 2 into the <DREMIO_HOME>\jars\3rdparty folder.
+4. Take the resulting .jar file in the target folder and put it in the <DREMIO_HOME>\jars folder in Dremio.
 5. Restart Dremio
 
 Debugging
