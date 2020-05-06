@@ -1,6 +1,6 @@
 # Dremio BigQuery Connector
 
-
+[![Build Status](https://travis-ci.org/panoramichq/dremio-bigquery-connector.svg?branch=master)](https://travis-ci.org/panoramichq/dremio-bigquery-connector)
 ![Last Commit](https://img.shields.io/github/last-commit/panoramichq/dremio-bigquery-connector)
 ![Latest Release](https://img.shields.io/github/v/release/panoramichq/dremio-bigquery-connector)
 ![License](https://img.shields.io/badge/license-Apache%202-blue)
