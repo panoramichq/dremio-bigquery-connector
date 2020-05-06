@@ -7,11 +7,11 @@ before_install:
 - mvn install:install-file -Dfile=googlebigquery-jdbc42-shaded-1.2.2.1004.jar -DgroupId=com.simba.googlebigquery -DartifactId=googlebigquery-jdbc42-shaded -Dversion=1.2.2.1004 -Dpackaging=jar -DgeneratePom=true
 script:
 - mvn clean install -DskipTests
-- mv target/dremio-bigquery-plugin-*.jar dremio-bigquery-plugin.jar
 deploy:
   provider: releases
   api_key:
     secure: UBxFLvA8U1pJoOYEMuXafj1EmmqyH3RGrRKPY0ADJIdSIUrEW5/zGGSYWQIY9EqYMs4FgBc9SnC1n+P8fGfvnMgP7s6XIuvRhybMPYbcquXUasLID2TU5GzNc8N+gvjhxHtEc8OgFfDaE1b1pL79bIYS99vDZ8pcjYOdf1i3ND3HkHTJPROP9bdWLflGAjaz/RW0ROZYqpEyH6gPTymOxkCXrarX2pngRSGlSEZkQoKLwfzuwZKeoF4fBd3eJ74K1SqTPmOSaYp2VR04Pfq+JwjFEje0oh1vN3Svty1bPNDwNVDpyG/EhifNCInPyM/3U7Gaqm2b0miX3pwz0PvENHtDHmiAh/FyrH39CD144gHXfC75PzOeNlAVkO2T5h2OpzGLHB+YlUt2z+QHt7bjK2UYeLwzYqHFz1S25sQzDGwP8iSrQNlvY8wfIyLWuFaFVRG5bHWBfsKYfjHRQ4H4m0MupMr9A71JncKE+5ZiD3fQejtSwOVojHKvt7nIinawCS5aH0DAf84WO0WTZ6ZsSe28PwCYAzYUk8gUiRDgTw3jnL5gupLXfUMyIAs1hB+jDfTun3BZnWj8pVQRMcnWfNgB9ib0BBnlEwE8puDCOITplrOf19KP3RABZZQT2zZR4Xto5j6B3j9/KZ8uLNh33d4tWheegFQMxj3PSQSsgrI=
-  file: dremio-bigquery-plugin.jar
+  file_glob: true
+  file: target/dremio-bigquery-plugin-*.jar
   on:
     repo: panoramichq/dremio-bigquery-connector
