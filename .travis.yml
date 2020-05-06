@@ -1,14 +1,15 @@
 language: java
 sudo: false
 before_install:
-- wget https://maven.dremio.com/free/com/dremio/distribution/dremio-jdbc-driver/4.0.0-201909121834570395-c7a5071/dremio-jdbc-driver-4.0.0-201909121834570395-c7a5071.jar
-  -P src/main/resources
-- wget https://s3.amazonaws.com/a1.panocdn.com/support_files/dremio-oss/googlebigquery-jdbc42-shaded-1.2.2.1004.jar
-- mvn install:install-file -Dfile=googlebigquery-jdbc42-shaded-1.2.2.1004.jar -DgroupId=com.simba.googlebigquery -DartifactId=googlebigquery-jdbc42-shaded -Dversion=1.2.2.1004 -Dpackaging=jar -DgeneratePom=true
+- wget https://storage.googleapis.com/simba-bq-release/jdbc/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004.zip
+- unzip SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004.zip
+- mvn install:install-file -Dfile=GoogleBigQueryJDBC42.jar -DgroupId=com.simba.googlebigquery -DartifactId=googlebigquery-jdbc42 -Dversion=1.2.2.1004 -Dpackaging=jar -DgeneratePom=true
+- cd bigquery-driver-shade && mvn clean install -DskipTests
 script:
 - mvn clean install -DskipTests
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: UBxFLvA8U1pJoOYEMuXafj1EmmqyH3RGrRKPY0ADJIdSIUrEW5/zGGSYWQIY9EqYMs4FgBc9SnC1n+P8fGfvnMgP7s6XIuvRhybMPYbcquXUasLID2TU5GzNc8N+gvjhxHtEc8OgFfDaE1b1pL79bIYS99vDZ8pcjYOdf1i3ND3HkHTJPROP9bdWLflGAjaz/RW0ROZYqpEyH6gPTymOxkCXrarX2pngRSGlSEZkQoKLwfzuwZKeoF4fBd3eJ74K1SqTPmOSaYp2VR04Pfq+JwjFEje0oh1vN3Svty1bPNDwNVDpyG/EhifNCInPyM/3U7Gaqm2b0miX3pwz0PvENHtDHmiAh/FyrH39CD144gHXfC75PzOeNlAVkO2T5h2OpzGLHB+YlUt2z+QHt7bjK2UYeLwzYqHFz1S25sQzDGwP8iSrQNlvY8wfIyLWuFaFVRG5bHWBfsKYfjHRQ4H4m0MupMr9A71JncKE+5ZiD3fQejtSwOVojHKvt7nIinawCS5aH0DAf84WO0WTZ6ZsSe28PwCYAzYUk8gUiRDgTw3jnL5gupLXfUMyIAs1hB+jDfTun3BZnWj8pVQRMcnWfNgB9ib0BBnlEwE8puDCOITplrOf19KP3RABZZQT2zZR4Xto5j6B3j9/KZ8uLNh33d4tWheegFQMxj3PSQSsgrI=
   file_glob: true
