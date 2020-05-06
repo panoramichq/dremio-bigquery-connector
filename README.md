@@ -32,10 +32,9 @@ Dremio delivers lightning fast query speed and a self-service semantic layer ope
 Use Cases
 -----------
 
-* [Join data](https://www.dremio.com/tutorials/combining-data-from-multiple-datasets/) from Snowflake with other sources (On prem/Cloud)
+* [Join data](https://www.dremio.com/tutorials/combining-data-from-multiple-datasets/) from BigQuery with other sources (On prem/Cloud)
 * Interactive SQL performance with [Data Reflections](https://www.dremio.com/tutorials/getting-started-with-data-reflections/)
-* Offload Snowflake tables using [CTAS](https://www.dremio.com/tutorials/high-performance-parallel-exports/) to your cheap data lake storage - HDFS, S3, ADLS
-  * Or use [COPY INTO](https://docs.snowflake.net/manuals/sql-reference/sql/copy-into-location.html) to export data from Snowflake into S3/ADLS and query them directly using Dremio or [create external reflections](https://docs.dremio.com/acceleration/creating-reflections.html#external-reflections) on top of them.
+* Offload BigQuery tables using [CTAS](https://www.dremio.com/tutorials/high-performance-parallel-exports/) to your cheap data lake storage - HDFS, S3, ADLS
 * [Curate Datasets](https://www.dremio.com/tutorials/data-curation-with-dremio/) easily through the self-service platform
 
 Usage
