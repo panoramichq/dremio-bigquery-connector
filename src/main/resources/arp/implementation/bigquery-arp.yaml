@@ -1,0 +1,245 @@
+metadata:
+  # Manually Configured Metadata Section.
+  name: BIGQUERY
+  apiname: bigquery
+  spec_version: '2'
+
+syntax:
+  # Manually Configured Syntax Section.
+  identifier_quote: "`" #https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical#identifiers
+  identifier_length_limit: 128 #https://cloud.google.com/bigquery/quotas#streaming_inserts
+  allows_boolean_literal: false
+  map_boolean_literal_to_bit: false
+  supports_catalogs: true
+  supports_schemas: true
+
+# https://www.simba.com/products/BigQuery/doc/JDBC_InstallGuide/content/jdbc/bq/features/datatypes.htm
+data_types:
+  mappings:
+    #------------Boolean types--------------#
+    - source:
+        name: "BOOLEAN"
+      dremio:
+        name: "boolean"
+
+    #------------Numeric types--------------#
+    - source:
+        name: "NUMERIC"
+        max_precision: 38
+        max_scale: 37
+      required_cast_args: "precision_scale"
+      dremio:
+        name: "DECIMAL"
+
+    - source:
+        name: "NUMBER"
+        max_precision: 38
+        max_scale: 37
+      dremio:
+        name: "DECIMAL"
+
+    - source:
+        name: "DECIMAL"
+        max_precision: 38
+        max_scale: 37
+      required_cast_args: "precision_scale"
+      dremio:
+        name: "DECIMAL"
+
+    - source:
+        name: "INT"
+      dremio:
+        name: "integer"
+    - source:
+        name: "INTEGER"
+      dremio:
+        name: "integer"
+    - source:
+        name: "SMALLINT"
+      dremio:
+        name: "integer"
+    - source:
+        name: "BIGINT"
+      dremio:
+        name: "bigint"
+
+    - source:
+        name: "FLOAT"
+      dremio:
+        name: "double"
+    - source:
+        name: "FLOAT4"
+      dremio:
+        name: "double"
+    - source:
+        name: "FLOAT8"
+      dremio:
+        name: "double"
+    - source:
+        name: "DOUBLE"
+      dremio:
+        name: "double"
+    - source:
+        name: "DOUBLE PRECISION"
+      dremio:
+        name: "double"
+
+    #------------String types--------------#
+    - source:
+        name: "VARCHAR"
+        max_precision: 16777216
+        literal_length_limit: 16777216
+      required_cast_args: "precision"
+      dremio:
+        name: "varchar"
+    - source:
+        name: "CHAR"
+        max_precision: 1
+        literal_length_limit: 1
+      dremio:
+        name: "varchar"
+    - source:
+        name: "CHARACTER"
+        max_precision: 1
+        literal_length_limit: 1
+      dremio:
+        name: "varchar"
+    - source:
+        name: "STRING"
+      dremio:
+        name: "varchar"
+
+    #------------Binary--------------#
+    - source:
+        name: "VARBINARY"
+        max_precision: 8388608
+        literal_length_limit: 8388608
+      required_cast_args: "precision"
+      dremio:
+        name: "varbinary"
+
+    #------------Date types--------------#
+    - source:
+        name: "DATE"
+      dremio:
+        name: "date"
+    - source:
+        name: "TIME"
+      dremio:
+        name: "time"
+    - source:
+        name: "TIMESTAMP"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMP_LTZ"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMP_NTZ"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMP_TZ"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMPLTZ"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMPNTZ"
+      dremio:
+        name: "timestamp"
+    - source:
+        name: "TIMESTAMPTZ"
+      dremio:
+        name: "timestamp"
+    #------------ BigQuery's complex STRUCT type (JSON) is mapped to Dremio's VARCHAR. -------------#
+    #------------ You can use convert_from(<field>, 'JSON') in Dremio to treat it as a JSON -------------#
+    - source:
+        name: "STRUCT"
+      dremio:
+        name: "VARCHAR"
+
+relational_algebra:
+  aggregation:
+    enable: true
+    group_by_ordinal: false
+    distinct: true
+    count_functions:
+      count_star:
+        enable: true
+      count:
+        enable: true
+      count_distinct:
+        enable: true
+    # https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators
+
+    functions:
+      - names:
+          - "avg"
+        signatures:
+          - args:
+              - "double"
+            return: "double"
+          - args:
+              - "decimal"
+            return: "decimal"
+          - args:
+              - "integer"
+            return: "double"
+      - names:
+          - "max"
+          - "min"
+        signatures:
+          - args:
+              - "integer"
+            return: "integer"
+          - args:
+              - "double"
+            return: "double"
+          - args:
+              - "decimal"
+            return: "decimal"
+          - args:
+              - "varchar"
+            return: "varchar"
+      - names:
+          - "sum"
+        signatures:
+          - args:
+              - "double"
+            return: "double"
+          - args:
+              - "decimal"
+            return: "decimal"
+          - args:
+              - "integer"
+            return: "bigint"
+  except:
+    enable: false
+  project:
+    enable: true
+  join:
+    enable: true
+    cross:
+      enable: true
+      rewrite: "{0}, {1}"
+    inner:
+      enable: true
+      inequality: true
+    left:
+      enable: true
+      inequality: true
+    right:
+      enable: true
+      inequality: true
+    full:
+      enable: true
+      inequality: true
+  sort:
+    enable: true
+    order_by:
+      enable: true
+      default_nulls_ordering: low

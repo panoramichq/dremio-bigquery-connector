@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!--
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.simba.googlebigquery</groupId>
+  <version>1.2.2.1004</version>
+  <artifactId>googlebigquery-jdbc42-shaded</artifactId>
+  <name>BigQuery JDBC Driver</name>
+  <packaging>jar</packaging>
+
+  <dependencies>
+
+    <!--
+         The BigQuery JDBC driver isn't listed in Maven, so you have to install it manually. Download from:
+         https://cloud.google.com/bigquery/providers/simba-drivers
+
+         Install BigQuery JDBC driver locally:
+
+         mvn install:install-file \
+             -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004/GoogleBigQueryJDBC42.jar \
+             -DgroupId=com.simba.googlebigquery \
+             -DartifactId=googlebigquery-jdbc42 \
+             -Dversion=1.2.2.1004 \
+             -Dpackaging=jar \
+             -DgeneratePom=true
+    -->
+    <dependency>
+      <groupId>com.simba.googlebigquery</groupId>
+      <artifactId>googlebigquery-jdbc42</artifactId>
+      <version>1.2.2.1004</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.28.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-bigquerystorage</artifactId>
+      <version>0.85.0-alpha</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-bigquery</artifactId>
+      <version>v2-rev426-1.25.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-cloud-bigquerystorage-v1beta1</artifactId>
+      <version>0.50.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+      <version>1.9.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.10.1</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <relocations>
+            <relocation>
+              <pattern>com.google</pattern>
+              <shadedPattern>bqdeps.com.google</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>com.fasterxml</pattern>
+              <shadedPattern>bqdeps.com.fasterxml</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>google</pattern>
+              <shadedPattern>bqdeps.google</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>mozilla</pattern>
+              <shadedPattern>bqdeps.mozilla</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>grpc</pattern>
+              <shadedPattern>bqdeps.grpc</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>javax</pattern>
+              <shadedPattern>bqdeps.javax</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>io</pattern>
+              <shadedPattern>bqdeps.io</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>net</pattern>
+              <shadedPattern>bqdeps.net</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>org</pattern>
+              <shadedPattern>bqdeps.org</shadedPattern>
+            </relocation>
+          </relocations>
+          <filters>
+            <filter>
+              <artifact>*:*</artifact>
+              <excludes>
+                <exclude>META-INF/maven/**</exclude>
+                <exclude>META-INF/services/com*</exclude>
+                <exclude>META-INF/services/io*</exclude>
+                <exclude>META-INF/services/org*</exclude>
+                <exclude>META-INF/*.SF</exclude>
+                <exclude>META-INF/*.DSA</exclude>
+                <exclude>META-INF/*.RSA</exclude>
+              </excludes>
+            </filter>
+          </filters>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+
