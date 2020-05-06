@@ -80,7 +80,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
       keyPath = getOauthPrivateKeyPath();
     } catch (final IOException e) {
       // This will cause an error in auth, no need to do anything here...
-      logger.warn("Unable to write BigQuery auth file", e);
+      logger.warn("Unable to write BigQuery authentication key", e);
     }
 
     // Setup the parameters required to connect to BigQuery
