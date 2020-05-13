@@ -56,7 +56,8 @@ Building and Installation
 
 1. Download and install the Google Simba BigQuery JDBC driver from [the Google website](https://cloud.google.com/bigquery/providers/simba-drivers). Install the main JAR file into your local Maven repository with the following (update the path to match the download path):
 
-```    mvn install:install-file \
+```
+    mvn install:install-file \
         -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004/GoogleBigQueryJDBC42.jar \
         -DgroupId=com.simba.googlebigquery \
         -DartifactId=googlebigquery-jdbc42 \
