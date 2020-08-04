@@ -15,4 +15,5 @@ deploy:
   file_glob: true
   file: target/dremio-bigquery-plugin-*.jar
   on:
+    tags: true
     repo: panoramichq/dremio-bigquery-connector
