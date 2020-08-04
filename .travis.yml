@@ -1,9 +1,9 @@
 language: java
 sudo: false
 before_install:
-- wget https://storage.googleapis.com/simba-bq-release/jdbc/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004.zip
-- unzip SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004.zip
-- mvn install:install-file -Dfile=GoogleBigQueryJDBC42.jar -DgroupId=com.simba.googlebigquery -DartifactId=googlebigquery-jdbc42 -Dversion=1.2.2.1004 -Dpackaging=jar -DgeneratePom=true
+- wget https://storage.googleapis.com/simba-bq-release/jdbc/SimbaJDBCDriverforGoogleBigQuery42_1.2.4.1007.zip
+- unzip SimbaJDBCDriverforGoogleBigQuery42_1.2.4.1007.zip
+- mvn install:install-file -Dfile=GoogleBigQueryJDBC42.jar -DgroupId=com.simba.googlebigquery -DartifactId=googlebigquery-jdbc42 -Dversion=1.2.4.1007 -Dpackaging=jar -DgeneratePom=true
 - cd bigquery-driver-shade && mvn clean install -DskipTests && cd ..
 script:
 - mvn clean install -DskipTests

@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.simba.googlebigquery</groupId>
-  <version>1.2.2.1004</version>
+  <version>1.2.4.1007</version>
   <artifactId>googlebigquery-jdbc42-shaded</artifactId>
   <name>BigQuery JDBC Driver</name>
   <packaging>jar</packaging>
@@ -35,17 +35,17 @@
          Install BigQuery JDBC driver locally:
 
          mvn install:install-file \
-             -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004/GoogleBigQueryJDBC42.jar \
+             -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.4.1007/GoogleBigQueryJDBC42.jar \
              -DgroupId=com.simba.googlebigquery \
              -DartifactId=googlebigquery-jdbc42 \
-             -Dversion=1.2.2.1004 \
+             -Dversion=1.2.4.1007 \
              -Dpackaging=jar \
              -DgeneratePom=true
     -->
     <dependency>
       <groupId>com.simba.googlebigquery</groupId>
       <artifactId>googlebigquery-jdbc42</artifactId>
-      <version>1.2.2.1004</version>
+      <version>1.2.4.1007</version>
     </dependency>
 
     <dependency>

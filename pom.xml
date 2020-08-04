@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.dremio.plugins</groupId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
   <artifactId>dremio-bigquery-plugin</artifactId>
   <name>Plugins - BigQuery Plugin</name>
   <packaging>jar</packaging>
@@ -38,7 +38,7 @@
     <dependency>
       <groupId>com.simba.googlebigquery</groupId>
       <artifactId>googlebigquery-jdbc42-shaded</artifactId>
-      <version>1.2.2.1004</version>
+      <version>1.2.4.1007</version>
     </dependency>
 
     <dependency>
