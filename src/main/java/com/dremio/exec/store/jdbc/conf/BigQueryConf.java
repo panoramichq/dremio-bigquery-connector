@@ -70,6 +70,11 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
   @NotMetadataImpacting
   public int fetchSize = 2000;
 
+  @Tag(6)
+  @DisplayMetadata(label = "Query timeout (s)")
+  @NotMetadataImpacting
+  public int queryTimeout = 10;
+
   @VisibleForTesting
   public String toJdbcConnectionString() {
     final String prjId = checkNotNull(this.projectId, "Missing project ID.");
@@ -90,6 +95,8 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
     attributes.put("OAuthPvtKeyPath", keyPath);
     // Service-account based auth
     attributes.put("OAuthType", "0");
+    // Query timeout
+    attributes.put("Timeout", Integer.toString(this.queryTimeout))
     // Allow result sets larger than 128MB
     attributes.put("AllowLargeResults", "1");
     // Use modern BQ SQL dialect
