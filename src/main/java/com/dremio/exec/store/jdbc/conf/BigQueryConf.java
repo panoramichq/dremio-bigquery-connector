@@ -96,7 +96,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
     // Service-account based auth
     attributes.put("OAuthType", "0");
     // Query timeout
-    attributes.put("Timeout", Integer.toString(this.queryTimeout))
+    attributes.put("Timeout", Integer.toString(this.queryTimeout));
     // Allow result sets larger than 128MB
     attributes.put("AllowLargeResults", "1");
     // Use modern BQ SQL dialect
