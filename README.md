@@ -58,10 +58,10 @@ Building and Installation
 
 ```
     mvn install:install-file \
-        -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.2.1004/GoogleBigQueryJDBC42.jar \
+        -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.4.1007/GoogleBigQueryJDBC42.jar \
         -DgroupId=com.simba.googlebigquery \
         -DartifactId=googlebigquery-jdbc42 \
-        -Dversion=1.2.2.1004 \
+        -Dversion=1.2.4.1007 \
         -Dpackaging=jar \
         -DgeneratePom=true
 ```
