@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.simba.googlebigquery</groupId>
-  <version>1.2.4.1007</version>
+  <version>1.2.11.1014</version>
   <artifactId>googlebigquery-jdbc42-shaded</artifactId>
   <name>BigQuery JDBC Driver</name>
   <packaging>jar</packaging>
@@ -35,17 +35,17 @@
          Install BigQuery JDBC driver locally:
 
          mvn install:install-file \
-             -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.4.1007/GoogleBigQueryJDBC42.jar \
+             -Dfile=/Users/build/Downloads/SimbaJDBCDriverforGoogleBigQuery42_1.2.11.1014/GoogleBigQueryJDBC42.jar \
              -DgroupId=com.simba.googlebigquery \
              -DartifactId=googlebigquery-jdbc42 \
-             -Dversion=1.2.4.1007 \
+             -Dversion=1.2.11.1014 \
              -Dpackaging=jar \
              -DgeneratePom=true
     -->
     <dependency>
       <groupId>com.simba.googlebigquery</groupId>
       <artifactId>googlebigquery-jdbc42</artifactId>
-      <version>1.2.4.1007</version>
+      <version>1.2.11.1014</version>
     </dependency>
 
     <dependency>
@@ -57,25 +57,25 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-bigquerystorage</artifactId>
-      <version>0.85.0-alpha</version>
+      <version>0.101.0-beta</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-bigquery</artifactId>
-      <version>v2-rev426-1.25.0</version>
+      <version>v2-rev20200415-1.30.9</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-cloud-bigquerystorage-v1beta1</artifactId>
-      <version>0.50.0</version>
+      <version>0.66.0</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
-      <version>1.9.0</version>
+      <version>1.10.0</version>
     </dependency>
 
     <dependency>
