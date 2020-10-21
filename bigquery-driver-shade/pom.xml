@@ -99,9 +99,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.3</version>
+        <version>3.2.4</version>
         <configuration>
           <minimizeJar>true</minimizeJar>
+          <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+          </transformers>
           <relocations>
             <relocation>
               <pattern>com.google</pattern>
@@ -120,16 +123,24 @@
               <shadedPattern>bqdeps.mozilla</shadedPattern>
             </relocation>
             <relocation>
-              <pattern>grpc</pattern>
-              <shadedPattern>bqdeps.grpc</shadedPattern>
+              <pattern>grpc.gcp</pattern>
+              <shadedPattern>bqdeps.grpc.gcp</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>grpc.lb</pattern>
+              <shadedPattern>bqdeps.grpc.lb</shadedPattern>
             </relocation>
             <relocation>
               <pattern>javax.annotation</pattern>
               <shadedPattern>bqdeps.javax.annotation</shadedPattern>
             </relocation>
             <relocation>
-              <pattern>io</pattern>
-              <shadedPattern>bqdeps.io</shadedPattern>
+              <pattern>io.grpc</pattern>
+              <shadedPattern>bqdeps.io.grpc</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>io.opencensus</pattern>
+              <shadedPattern>bqdeps.io.opencensus</shadedPattern>
             </relocation>
             <relocation>
               <pattern>net</pattern>
@@ -153,6 +164,7 @@
               <artifact>io.grpc:grpc-netty-shaded</artifact>
               <excludes>
                 <exclude>META-INF/native/libio_grpc_netty_shaded_netty_tcnative_linux_x86_64.so</exclude>
+                <exclude>META-INF/native/libio_grpc_netty_shaded_netty_transport_native_epoll_x86_64.so</exclude>
                 <exclude>META-INF/native/io_grpc_netty_shaded_netty_tcnative_windows_x86_64.dll</exclude>
                 <exclude>META-INF/native/libio_grpc_netty_shaded_netty_tcnative_osx_x86_64.jnilib</exclude>
               </excludes>
@@ -168,10 +180,11 @@
               <artifact>*:*</artifact>
               <excludes>
                 <exclude>META-INF/maven/**</exclude>
-                <exclude>META-INF/services/*</exclude>
                 <exclude>META-INF/*.SF</exclude>
                 <exclude>META-INF/*.DSA</exclude>
                 <exclude>META-INF/*.RSA</exclude>
+                <exclude>META-INF/services/io.grpc.ManagedChannelProvider</exclude>
+                <exclude>META-INF/services/io.grpc.ServerProvider</exclude>
               </excludes>
             </filter>
           </filters>
@@ -221,6 +234,10 @@
                 <fileSet>
                   <sourceFile>${project.build.directory}/classes/META-INF/native/libio_grpc_netty_shaded_netty_tcnative_linux_x86_64.so</sourceFile>
                   <destinationFile>${project.build.directory}/classes/META-INF/native/libbqdeps_io_grpc_netty_shaded_netty_tcnative_linux_x86_64.so</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.build.directory}/classes/META-INF/native/libio_grpc_netty_shaded_netty_transport_native_epoll_x86_64.so</sourceFile>
+                  <destinationFile>${project.build.directory}/classes/META-INF/native/libbqdeps_io_grpc_netty_shaded_netty_transport_native_epoll_x86_64.so</destinationFile>
                 </fileSet>
                 <fileSet>
                   <sourceFile>${project.build.directory}/classes/META-INF/native/io_grpc_netty_shaded_netty_tcnative_windows_x86_64.dll</sourceFile>
