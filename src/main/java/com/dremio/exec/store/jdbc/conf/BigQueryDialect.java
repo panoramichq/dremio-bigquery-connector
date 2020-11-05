@@ -2,6 +2,16 @@ package com.dremio.exec.store.jdbc.conf;
 
 import javax.sql.DataSource;
 
+import org.apache.calcite.sql.SqlAbstractStringLiteral;
+import org.apache.calcite.sql.SqlBasicCall;
+import org.apache.calcite.sql.SqlCall;
+import org.apache.calcite.sql.SqlNode;
+import org.apache.calcite.sql.SqlNodeList;
+import org.apache.calcite.sql.SqlSelect;
+import org.apache.calcite.sql.SqlWriter;
+import org.apache.calcite.sql.fun.SqlStdOperatorTable;
+import org.apache.calcite.sql.parser.SqlParserPos;
+
 import com.dremio.exec.store.jdbc.JdbcSchemaFetcher;
 import com.dremio.exec.store.jdbc.JdbcStoragePlugin;
 import com.dremio.exec.store.jdbc.JdbcStoragePlugin.Config;
@@ -45,5 +55,24 @@ public class BigQueryDialect extends ArpDialect {
   @Override
   public boolean supportsNestedAggregations() {
     return false;
+  }
+
+  @Override
+  public void unparseCall(SqlWriter writer, SqlCall call, int leftPrec, int rightPrec) {
+    if (call instanceof SqlSelect) {
+      SqlSelect select = (SqlSelect) call;
+      SqlNodeList group = select.getGroup();
+
+      if (group != null) {
+        for (int i = 0; i < group.size(); i++) {
+          SqlNode sqlNode = group.get(i);
+          if (sqlNode instanceof SqlAbstractStringLiteral) {
+            SqlAbstractStringLiteral stringLiteral = (SqlAbstractStringLiteral) sqlNode;
+            group.set(i, new SqlBasicCall(SqlStdOperatorTable.COALESCE, new SqlNode[]{stringLiteral}, SqlParserPos.ZERO));
+          }
+        }
+      }
+    }
+    super.unparseCall(writer, call, leftPrec, rightPrec);
   }
 }

@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.dremio.plugins</groupId>
-  <version>0.1.2a</version>
+  <version>0.1.3</version>
   <artifactId>dremio-bigquery-plugin</artifactId>
   <name>Plugins - BigQuery Plugin</name>
   <packaging>jar</packaging>
