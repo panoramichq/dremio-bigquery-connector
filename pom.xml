@@ -21,13 +21,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.dremio.plugins</groupId>
-  <version>0.1.3</version>
+  <version>12.0.0-202012212145230282-d8947fd3</version>
   <artifactId>dremio-bigquery-plugin</artifactId>
   <name>Plugins - BigQuery Plugin</name>
   <packaging>jar</packaging>
 
   <properties>
-    <version.dremio>4.2.1-202004111451200819-0c3ecaea</version.dremio>
+    <version.dremio>12.0.0-202012212145230282-d8947fd3</version.dremio>
   </properties>
 
   <dependencies>
@@ -105,7 +105,7 @@
     <repository>
       <id>dremio-free</id>
       <url>http://maven.dremio.com/free/</url>
-    </repository>    
+    </repository>
   </repositories>
 
 </project>

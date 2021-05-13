@@ -12,9 +12,8 @@ import org.apache.calcite.sql.SqlWriter;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.parser.SqlParserPos;
 
-import com.dremio.exec.store.jdbc.JdbcSchemaFetcher;
-import com.dremio.exec.store.jdbc.JdbcStoragePlugin;
-import com.dremio.exec.store.jdbc.JdbcStoragePlugin.Config;
+import com.dremio.exec.store.jdbc.JdbcSchemaFetcherImpl;
+import com.dremio.exec.store.jdbc.JdbcPluginConfig;
 import com.dremio.exec.store.jdbc.dialect.arp.ArpDialect;
 import com.dremio.exec.store.jdbc.dialect.arp.ArpYaml;
 
@@ -35,9 +34,9 @@ public class BigQueryDialect extends ArpDialect {
    * Custom Dialect for BigQuery.
    * The following block is required as BigQuery reports integers as NUMBER(38,0).
    */
-  static class BigQuerySchemaFetcher extends JdbcSchemaFetcher {
-    public BigQuerySchemaFetcher(String name, DataSource dataSource, int timeout, Config config) {
-      super(name, dataSource, timeout, config);
+  static class BigQuerySchemaFetcher extends JdbcSchemaFetcherImpl {
+    public BigQuerySchemaFetcher(JdbcPluginConfig config) {
+      super(config);
     }
 
     @Override
@@ -47,9 +46,8 @@ public class BigQueryDialect extends ArpDialect {
   }
 
   @Override
-  public JdbcSchemaFetcher getSchemaFetcher(final String name, final DataSource dataSource, final int timeout,
-      final JdbcStoragePlugin.Config config) {
-    return new BigQuerySchemaFetcher(name, dataSource, timeout, config);
+  public JdbcSchemaFetcherImpl newSchemaFetcher(JdbcPluginConfig config) {
+    return new BigQuerySchemaFetcher(config);
   }
 
   @Override
