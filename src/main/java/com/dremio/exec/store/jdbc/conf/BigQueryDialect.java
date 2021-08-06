@@ -2,7 +2,7 @@ package com.dremio.exec.store.jdbc.conf;
 
 import javax.sql.DataSource;
 
-import org.apache.calcite.sql.SqlAbstractStringLiteral;
+import org.apache.calcite.sql.SqlLiteral;
 import org.apache.calcite.sql.SqlBasicCall;
 import org.apache.calcite.sql.SqlCall;
 import org.apache.calcite.sql.SqlNode;
@@ -64,8 +64,8 @@ public class BigQueryDialect extends ArpDialect {
       if (group != null) {
         for (int i = 0; i < group.size(); i++) {
           SqlNode sqlNode = group.get(i);
-          if (sqlNode instanceof SqlAbstractStringLiteral) {
-            SqlAbstractStringLiteral stringLiteral = (SqlAbstractStringLiteral) sqlNode;
+          if (sqlNode instanceof SqlLiteral) {
+            SqlLiteral stringLiteral = (SqlLiteral) sqlNode;
             group.set(i, new SqlBasicCall(SqlStdOperatorTable.COALESCE, new SqlNode[]{stringLiteral}, SqlParserPos.ZERO));
           }
         }
