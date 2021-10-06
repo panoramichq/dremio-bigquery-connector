@@ -33,7 +33,7 @@ import io.protostuff.Tag;
 /**
  * Configuration for BigQuery.
  */
-@SourceType(value = "BIGQUERY", label = "BigQuery" , uiConfig = "sqlite-layout.json")
+@SourceType(value = "BIGQUERY", label = "BigQuery", uiConfig = "bigquery-layout.json", externalQuerySupported = true)
 public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
 
   private static final String ARP_FILENAME = "arp/implementation/bigquery-arp.yaml";
