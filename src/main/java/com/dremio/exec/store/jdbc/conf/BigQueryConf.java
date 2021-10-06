@@ -88,6 +88,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
   @DisplayMetadata(label = "Connection idle time (s)")
   @NotMetadataImpacting
   public int idleTimeSec = 60;
+  
   @VisibleForTesting
   public String toJdbcConnectionString() {
     final String prjId = checkNotNull(this.projectId, "Missing project ID.");
