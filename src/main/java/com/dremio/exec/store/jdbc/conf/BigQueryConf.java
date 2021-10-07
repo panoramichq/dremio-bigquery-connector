@@ -33,7 +33,7 @@ import io.protostuff.Tag;
 /**
  * Configuration for BigQuery.
  */
-@SourceType(value = "BIGQUERY", label = "BigQuery")
+@SourceType(value = "BIGQUERY", label = "BigQuery", uiConfig = "bigquery-layout.json", externalQuerySupported = true)
 public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
 
   private static final String ARP_FILENAME = "arp/implementation/bigquery-arp.yaml";
@@ -78,6 +78,17 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
   @NotMetadataImpacting
   public int queryTimeout = 10;
 
+
+  @Tag(7)
+  @DisplayMetadata(label = "Maximum idle connections")
+  @NotMetadataImpacting
+  public int maxIdleConns = 8;
+
+  @Tag(8)
+  @DisplayMetadata(label = "Connection idle time (s)")
+  @NotMetadataImpacting
+  public int idleTimeSec = 60;
+  
   @VisibleForTesting
   public String toJdbcConnectionString() {
     final String prjId = checkNotNull(this.projectId, "Missing project ID.");
@@ -144,7 +155,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
     final Properties properties = new Properties();
     return DataSources.newGenericConnectionPoolDataSource(DRIVER,
         toJdbcConnectionString(), null, null, properties,
-        DataSources.CommitMode.DRIVER_SPECIFIED_COMMIT_MODE);
+        DataSources.CommitMode.DRIVER_SPECIFIED_COMMIT_MODE, maxIdleConns, idleTimeSec);
   }
 
   @Override
