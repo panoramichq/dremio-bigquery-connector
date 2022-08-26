@@ -21,13 +21,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.dremio.plugins</groupId>
-  <version>12.0.0-202012212145230282-d8947fd3</version>
+  <version>21.2.0-SNAPSHOT</version>
   <artifactId>dremio-bigquery-plugin</artifactId>
   <name>Plugins - BigQuery Plugin</name>
   <packaging>jar</packaging>
 
   <properties>
-    <version.dremio>12.0.0-202012212145230282-d8947fd3</version.dremio>
+    <version.dremio>21.2.0-202205262146080444-038d6d1b</version.dremio>
+    <version.simba.google.bigquery.jdbc>1.2.11.1014</version.simba.google.bigquery.jdbc>
   </properties>
 
   <dependencies>
@@ -38,7 +39,7 @@
     <dependency>
       <groupId>com.simba.googlebigquery</groupId>
       <artifactId>googlebigquery-jdbc42-shaded</artifactId>
-      <version>1.2.11.1014</version>
+      <version>${version.simba.google.bigquery.jdbc}</version>
     </dependency>
 
     <dependency>

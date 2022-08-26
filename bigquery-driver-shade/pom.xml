@@ -25,7 +25,16 @@
   <artifactId>googlebigquery-jdbc42-shaded</artifactId>
   <name>BigQuery JDBC Driver</name>
   <packaging>jar</packaging>
-
+  <properties>
+    <version.simba.google.bigquery.jdbc>1.2.11.1014</version.simba.google.bigquery.jdbc>
+    <!-- Simba JDBC Dependency versions -->
+    <version.joda.time>2.10.1</version.joda.time>
+    <version.apache.avro>1.11.0</version.apache.avro>
+    <version.google.api>1.32.1</version.google.api>
+    <version.google.api.services.bigquery>v2-rev20210617-1.32.1</version.google.api.services.bigquery>
+    <version.grpc.google.cloud.biqquerystorage>0.127.2</version.grpc.google.cloud.biqquerystorage>
+    <version.google.cloud.bigquerystorage>2.8.3</version.google.cloud.bigquerystorage>
+  </properties>
   <dependencies>
 
     <!--
@@ -45,45 +54,44 @@
     <dependency>
       <groupId>com.simba.googlebigquery</groupId>
       <artifactId>googlebigquery-jdbc42</artifactId>
-      <version>1.2.11.1014</version>
+      <version>${version.simba.google.bigquery.jdbc}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.api-client</groupId>
       <artifactId>google-api-client</artifactId>
-      <version>1.28.0</version>
+      <version>${version.google.api}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-bigquerystorage</artifactId>
-      <version>0.101.0-beta</version>
+      <version>${version.google.cloud.bigquerystorage}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-bigquery</artifactId>
-      <version>v2-rev20200415-1.30.9</version>
+      <version>${version.google.api.services.bigquery}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-cloud-bigquerystorage-v1beta1</artifactId>
-      <version>0.66.0</version>
+      <version>${version.grpc.google.cloud.biqquerystorage}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
-      <version>1.10.0</version>
+      <version>${version.apache.avro}</version>
     </dependency>
 
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
-      <version>2.10.1</version>
+      <version>${version.joda.time}</version>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -107,16 +115,16 @@
           </transformers>
           <relocations>
             <relocation>
-              <pattern>com.google</pattern>
-              <shadedPattern>bqdeps.com.google</shadedPattern>
-            </relocation>
-            <relocation>
               <pattern>com.fasterxml</pattern>
               <shadedPattern>bqdeps.com.fasterxml</shadedPattern>
             </relocation>
             <relocation>
-              <pattern>google</pattern>
-              <shadedPattern>bqdeps.google</shadedPattern>
+              <pattern>google.</pattern>
+              <shadedPattern>bqdeps.google.</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>com.google</pattern>
+              <shadedPattern>bqdeps.com.google</shadedPattern>
             </relocation>
             <relocation>
               <pattern>mozilla</pattern>
@@ -169,11 +177,12 @@
                 <exclude>META-INF/native/libio_grpc_netty_shaded_netty_tcnative_osx_x86_64.jnilib</exclude>
               </excludes>
             </filter>
-            <!-- Filter google jks -->
+            <!-- Filter non-renamed google.jks &  -->
             <filter>
               <artifact>com.google.api-client:google-api-client</artifact>
               <excludes>
                 <exclude>com/google/api/client/googleapis/google.jks</exclude>
+                <!--exclude>com/google/api/client/googleapis/google-api-client.properties</exclude-->
               </excludes>
             </filter>
             <filter>
@@ -210,7 +219,7 @@
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
-              <includes>**/META-INF/native/*,com/google/api/client/googleapis/google.jks</includes>
+              <includes>**/META-INF/native/*,com/google/api/client/googleapis/google.jks,com/google/api/client/googleapis/google-api-client.properties,com/google/api/client/googleapis/google.p12</includes>
               <outputDirectory>${project.build.directory}/classes/</outputDirectory>
               <overWriteReleases>true</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
@@ -250,6 +259,10 @@
                 <fileSet>
                   <sourceFile>${project.build.directory}/classes/com/google/api/client/googleapis/google.jks</sourceFile>
                   <destinationFile>${project.build.directory}/classes/bqdeps/com/google/api/client/googleapis/bqdeps.google.jks</destinationFile>
+                </fileSet>
+                <fileSet>
+                  <sourceFile>${project.build.directory}/classes/com/google/api/client/googleapis/google.p12</sourceFile>
+                  <destinationFile>${project.build.directory}/classes/bqdeps/com/google/api/client/googleapis/bqdeps.google.p12</destinationFile>
                 </fileSet>
               </fileSets>
             </configuration>
