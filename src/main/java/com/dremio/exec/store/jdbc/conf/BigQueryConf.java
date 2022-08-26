@@ -1,7 +1,18 @@
 package com.dremio.exec.store.jdbc.conf;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.stream.Collectors.joining;
+import com.dremio.exec.catalog.conf.DisplayMetadata;
+import com.dremio.exec.catalog.conf.NotMetadataImpacting;
+import com.dremio.exec.catalog.conf.Secret;
+import com.dremio.exec.catalog.conf.SourceType;
+import com.dremio.exec.store.jdbc.CloseableDataSource;
+import com.dremio.exec.store.jdbc.DataSources;
+import com.dremio.exec.store.jdbc.JdbcPluginConfig;
+import com.dremio.exec.store.jdbc.dialect.arp.ArpDialect;
+import com.dremio.options.OptionManager;
+import com.dremio.security.CredentialsService;
+import com.google.common.annotations.VisibleForTesting;
+import io.protostuff.Tag;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,29 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-import com.dremio.options.OptionManager;
-import com.dremio.security.CredentialsService;
-
-import com.dremio.exec.catalog.conf.DisplayMetadata;
-import com.dremio.exec.catalog.conf.NotMetadataImpacting;
-import com.dremio.exec.catalog.conf.Secret;
-import com.dremio.exec.catalog.conf.SourceType;
-import com.dremio.exec.server.SabotContext;
-import com.dremio.exec.store.jdbc.CloseableDataSource;
-import com.dremio.exec.store.jdbc.DataSources;
-import com.dremio.exec.store.jdbc.JdbcPluginConfig;
-import com.dremio.exec.store.jdbc.JdbcStoragePlugin;
-import com.dremio.exec.store.jdbc.dialect.arp.ArpDialect;
-import com.google.common.annotations.VisibleForTesting;
-
-import io.protostuff.Tag;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.stream.Collectors.joining;
 
 /**
  * Configuration for BigQuery.
  */
-@SourceType(value = "BIGQUERY", label = "BigQuery")
+@SourceType(value = "BIGQUERY", label = "BigQuery", uiConfig = "bigquery-layout.json", externalQuerySupported = true)
 public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
 
   private static final String ARP_FILENAME = "arp/implementation/bigquery-arp.yaml";
@@ -78,6 +73,17 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
   @NotMetadataImpacting
   public int queryTimeout = 10;
 
+
+  @Tag(7)
+  @DisplayMetadata(label = "Maximum idle connections")
+  @NotMetadataImpacting
+  public int maxIdleConns = 8;
+
+  @Tag(8)
+  @DisplayMetadata(label = "Connection idle time (s)")
+  @NotMetadataImpacting
+  public int idleTimeSec = 60;
+  
   @VisibleForTesting
   public String toJdbcConnectionString() {
     final String prjId = checkNotNull(this.projectId, "Missing project ID.");
@@ -131,7 +137,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
         .build();
   }
 
-  private String getOauthPrivateKeyPath() throws IOException {
+  public String getOauthPrivateKeyPath() throws IOException {
     final File temp = File.createTempFile("bqk", ".json");
     temp.deleteOnExit();
     final BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
@@ -144,7 +150,7 @@ public class BigQueryConf extends AbstractArpConf<BigQueryConf> {
     final Properties properties = new Properties();
     return DataSources.newGenericConnectionPoolDataSource(DRIVER,
         toJdbcConnectionString(), null, null, properties,
-        DataSources.CommitMode.DRIVER_SPECIFIED_COMMIT_MODE);
+        DataSources.CommitMode.DRIVER_SPECIFIED_COMMIT_MODE, maxIdleConns, idleTimeSec);
   }
 
   @Override
